@@ -2,16 +2,19 @@ point_height = 3;
 weight_width = 5.5;
 weight_length = 13;
 top_height = 10;
-top_diameter = 40;
+top_diameter = 35;
 thickness = 2;
 core_thickness = 15;
-top_z = point_height + 10;
+top_z = point_height + 7;
+core_height = top_z + top_height + thickness - 1;
+echo("height", core_height + point_height);
+echo("width", top_diameter);
 
 module base() {
-    module weight_container(hole = false) {
+    module weight_container() {
         for (i = [0:3]) {
             rotate(90 * i)
-            translate([-weight_width - 1, (core_thickness / 2) + 3.5, thickness])
+            translate([-weight_width - 1, core_thickness / 2, thickness])
             difference() {
                 cube([weight_length + 1, weight_width + 1, weight_width]);
                 translate([0.5, 0.5])
@@ -20,18 +23,59 @@ module base() {
         }
     }
 
+    module core_cuts() {
+        translate([0, 0, core_height - (thickness * 2)]) {
+            translate([- core_thickness / 2, core_thickness / 3])
+            cube([core_thickness, core_thickness, 10]);
+            rotate(-25)
+            intersection() {
+                difference() {
+                    cylinder(thickness, d = core_thickness + 1);
+                    cylinder(thickness, d = core_thickness - thickness);
+                }
+                cube([core_thickness, core_thickness, thickness]);
+            }
+            translate([0, 0, -4])
+            difference() {
+                difference() {
+                    cylinder(core_height, d = 9);
+                    cylinder(core_height, d = 6);
+                }
+                translate([-10, 0])
+                cube(20);
+                translate([0, -5, 5]) {
+                    rotate(-40, [0, 1])
+                    cube(20);
+                    cube(20);
+                }
+                translate([0, -thickness])
+                cube(10);
+            }
+            difference() {
+                cylinder(core_height, d = 9);
+                cylinder(core_height, d = 7);
+            }
+        }
+    }
+
     cylinder(point_height, d = 3);
     translate([0, 0, point_height])
-    cylinder(top_z + top_height, d = core_thickness);
+    difference() {
+        cylinder(core_height, d = core_thickness);
+        core_cuts();
+        rotate(180, [0, 0, 1])
+        core_cuts();
+    }
     translate([0, 0, top_z]) {
         difference() {
             cylinder(top_height, d = top_diameter);
             translate([0, 0, thickness])
             cylinder(top_height - thickness, d = top_diameter - (thickness * 2));
-            weight_container(hole = true);
+            weight_container();
         }
         weight_container();
     }
 }
 
 base();
+
