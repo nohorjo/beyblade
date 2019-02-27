@@ -1,0 +1,4 @@
+[submodule "lib/openscad-lib"]
+	path = lib/openscad-lib
+	url = https://github.com/nohorjo/openscad-lib
+	branch = master
