@@ -36,16 +36,16 @@ module main_gear() {
                 }
                 translate([0, 15, 3])
                 rotate(90, [1, 0])
-                cylinder(30, d = 3);
+                cylinder(30, d = 2.5);
             }
         }
-        translate([0, 5, 5])
+        translate([0, 5, 4.9])
         rotate(90, [1, 0])
         difference() {
             translate([-5, -5])
             cube([10, 5, 10]);
             difference() {
-                cylinder(10, d = 7.5);
+                cylinder(10, d = 7);
                 translate([-5, 0])
                 cube([10, 5, 10]);
             }
