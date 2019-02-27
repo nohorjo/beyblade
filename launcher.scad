@@ -10,7 +10,7 @@ gear_inner_diameter = 50 / PI;
 gear_outer_diameter = gear_inner_diameter + (2 * thickness);
 
 housing_inner_length = gear_outer_diameter + 1;
-housing_inner_width = gear_outer_diameter + 8;
+housing_inner_width = gear_outer_diameter + 10;
 housing_outer_length = housing_inner_length + (thickness * 3);
 housing_outer_width = housing_inner_width + (thickness * 3);
 housing_length_thickness = (housing_outer_length - housing_inner_length) / 2;
@@ -77,7 +77,7 @@ module housing_pins() {
 }
 
 module bottom_housing() {
-    spring_angle = 30;
+    spring_angle = 40;
     spring_length = housing_inner_length / 1.2;
 
     difference() {
@@ -89,7 +89,7 @@ module bottom_housing() {
         }
         translate([0, 0, -5])
         cylinder(10, d = mount_diameter + 0.5);
-        translate([(-housing_outer_length / 2) - 0.5, -((gear_outer_diameter / 2) + thickness), thickness])
+        translate([(-housing_outer_length / 2) - 0.5, -((gear_outer_diameter / 2) + thickness + 1), thickness])
         cube([housing_outer_length + 1, (thickness * 2) + 0.5, thickness + 0.5]);
         housing_pins();
     }

@@ -11,7 +11,7 @@ render() {
     attack_ring_base();
     translate([0, 0, 15]) {
         launcher();
-        translate([-225, -11.5, 15.5])
+        translate([-225, -12.5, 15.5])
         rip_cord(250);
     }
 }
