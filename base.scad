@@ -35,7 +35,7 @@ module base() {
                 }
                 cube([core_thickness, core_thickness, thickness]);
             }
-            translate([0, 0, -4])
+            translate([0, 0, -thickness])
             difference() {
                 difference() {
                     cylinder(core_height, d = 9);
@@ -44,8 +44,11 @@ module base() {
                 translate([-10, 0])
                 cube(20);
                 translate([0, -5, 5]) {
-                    rotate(-40, [0, 1])
-                    cube(20);
+                    rotate(-40, [0, 1]) {
+                        cube(20);
+                        translate([-23, 0, -5])
+                        cube(20);
+                    }
                     cube(20);
                 }
                 translate([0, -thickness])
@@ -77,5 +80,6 @@ module base() {
     }
 }
 
+render()
 base();
 
