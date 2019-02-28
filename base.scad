@@ -1,7 +1,7 @@
 point_height = 3;
 weight_width = 5.5;
 weight_length = 13;
-top_height = 6;
+top_height = 8;
 top_diameter = 35;
 thickness = 2;
 core_thickness = 15;
