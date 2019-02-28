@@ -1,7 +1,7 @@
 point_height = 3;
 weight_width = 5.5;
 weight_length = 13;
-top_height = 10;
+top_height = 6;
 top_diameter = 35;
 thickness = 2;
 core_thickness = 15;
@@ -10,19 +10,7 @@ core_height = top_z + top_height + thickness - 1;
 echo("height", core_height + point_height);
 echo("width", top_diameter);
 
-module base() {
-    module weight_container() {
-        for (i = [0:3]) {
-            rotate(90 * i)
-            translate([-weight_width - 1, core_thickness / 2, thickness])
-            difference() {
-                cube([weight_length + 1, weight_width + 1, weight_width]);
-                translate([0.5, 0.5])
-                cube([weight_length, weight_width, weight_width]);
-            }
-        }
-    }
-
+module base_core() {
     module core_cuts() {
         translate([0, 0, core_height - (thickness * 2)]) {
             translate([- core_thickness / 2, core_thickness / 3])
@@ -69,15 +57,36 @@ module base() {
         rotate(180, [0, 0, 1])
         core_cuts();
     }
-    translate([0, 0, top_z]) {
-        difference() {
-            cylinder(top_height, d = top_diameter);
-            translate([0, 0, thickness])
-            cylinder(top_height - thickness, d = top_diameter - (thickness * 2));
-            weight_container();
+    translate([0, 0, top_z - thickness])
+    cylinder(thickness, d = core_thickness + thickness);
+}
+
+module weight_section() {
+    module weight_containers() {
+        for (i = [0:3]) {
+            rotate(90 * i)
+            translate([-weight_width - 1, core_thickness / 2, thickness])
+            difference() {
+                cube([weight_length + 1, weight_width + 1, weight_width]);
+                translate([0.5, 0.5])
+                cube([weight_length, weight_width, weight_width]);
+            }
         }
-        weight_container();
     }
+
+    difference() {
+        cylinder(top_height, d = top_diameter);
+        translate([0, 0, thickness])
+        cylinder(top_height - thickness, d = top_diameter - (thickness * 2));
+        cylinder(thickness, d = core_thickness);
+    }
+    weight_containers();
+}
+
+module base() {
+    base_core();
+    translate([0, 0, top_z])
+    weight_section();
 }
 
 render()

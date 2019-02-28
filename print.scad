@@ -7,7 +7,10 @@ translate([20, 20])
 render() {
     translate([0, 0, 24])
     rotate(180, [1, 0])
-    base();
+    base_core();
+
+    translate([0, 80])
+    weight_section();
 
     translate([-15, 160])
     rotate(-45)
