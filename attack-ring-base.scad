@@ -10,7 +10,6 @@ module attack_ring_base() {
         cylinder(thickness, d = base_diameter + thickness);
         cylinder(thickness, d = core_diameter + 5);
     }
-    rotate(15)
     difference() {
         translate([-clip_length / 2, -clip_width / 2])
         cube([clip_length, clip_width, thickness]);

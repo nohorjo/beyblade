@@ -8,6 +8,7 @@ attack_ring_height = 16;
 render() {
     base();
     translate([0, 0, attack_ring_height])
+    rotate(15)
     attack_ring_base();
     translate([0, 0, attack_ring_height - 5]) {
         launcher();
