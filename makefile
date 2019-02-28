@@ -1,8 +1,10 @@
 
 all: $(patsubst %.scad,stl/%.stl,$(wildcard *.scad))
 
-stl/%.stl: %.scad $(shell find lib)
-	openscad -D '$$fn=100' -o $@ $<
+include $(wildcard stl/*.deps)
+
+stl/%.stl: %.scad
+	openscad -D '$$fn=100' -m make -o $@ -d $@.deps $<
 
 clean:
 	rm stl/*
